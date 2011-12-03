@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <title>Counter</title>
+<link rel="stylesheet" media="all" href="less.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<!-- Adding "maximum-scale=1" fixes the Mobile Safari auto-zoom bug: http://filamentgroup.com/examples/iosScaleBug/ -->
+</head>
+<body>
+
+<h1 id="counter">0</h1>
+<h3 id="repetitions">0</h3>
+<input type="text" id="repetitionLength" value=5 size="5"/>
+
+
+
+<script type="text/javascript">
+
+
+    function getRepetitionLength() {
+        console.log(document.getElementById("repetitionLength").value);
+        return parseInt(document.getElementById("repetitionLength").value);
+    }
+    function increaseCounter() {
+        var count = parseInt(localStorage.getItem("counter"));
+        count=count+1;
+        localStorage.setItem('counter', count);
+        return count;   
+    }
+    function getCount() {
+        return parseInt(localStorage.getItem("counter"));
+    }
+
+    function getCountThisRepetition(repetitionLength) {
+        return getCount()%repetitionLength;
+    }
+    function getRepetitions(repetitionLength){
+        return Math.floor(getCount()/repetitionLength);
+    }
+
+
+    function updateCounters() {
+        $('#counter').html(getCountThisRepetition(getRepetitionLength()));
+        $('#repetitions').html(getRepetitions(getRepetitionLength()))
+    }
+    $(function () {
+        updateCounters();
+        $('#counter').on('click',function() {
+            console.log('clicking!');
+            increaseCounter()
+            updateCounters()
+        })
+    })
+
+</script>
+</body>
+</html>
